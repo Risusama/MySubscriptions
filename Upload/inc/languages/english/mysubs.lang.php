@@ -24,7 +24,5 @@
 	$l['error_invalid_length'] = 'You need to select the length of the subscription.';
 	$l['error_invalid_subscription'] = 'You have selected an invalid subscription.';
 	$l['error_subscriptions_disabled'] = 'The administrator has currently disabled MySubscriptions.';
-	
-	$l['task_mysubs_ran'] = 'MySubscriptions ran successfully.';
 
 ?>

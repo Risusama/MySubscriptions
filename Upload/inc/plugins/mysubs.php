@@ -1,14 +1,12 @@
 <?php
 
 	/*
-	 *	MybbPlugins
-	 *	http://www.mybbplug.in/s/
-	 *
 	 *	MySubscriptions
-	 *	Created by Ethan at MybbPlugins
-	 *	Thanks to Jammerx2 for inspiration/approval
+	 *	Created by Ethan DeLong
 	 *
 	 *	This plugin and its contents are free for use.
+	 *
+	 *	Like Pokemon? Check out http://www.pokemonforum.org!
 	 */
 	
 	// Prevent users from accessing this file directly.
@@ -25,16 +23,16 @@
 		return array(
 			'name'			=> 'MySubscriptions',
 			'description'	=> 'Lets you implement paid subscriptions to groups within your forums.',
-			'website'		=> 'http://www.mybbplug.in/s/',
+			'website'		=> 'http://www.pokemonforum.org',
 			'author'		=> 'Ethan',
-			'authorsite'	=> 'http://www.mybbplug.in/s/',
-			'version'		=> '1.00',
-			'compatibility' => '16*',
-			'guid'			=> '36eb93bd93f5cf7c4be0fbf1df664e4c'
+			'authorsite'	=> 'http://www.pokemonforum.org',
+			'version'		=> '2.01',
+			'compatibility' => '18*',
+			'guid'			=> ''
 		);
 	}
 	
-	function mysubs_activate()
+	function mysubs_install()
 	{
 		global $cache, $db, $mybb;
 		
@@ -144,6 +142,33 @@
 			);
 		}
 		if(isset($settings)) $db->insert_query_multiple('mysubs_settings', $settings);
+	}
+	
+	function mysubs_is_installed()
+	{
+		global $db;
+		
+		return $db->table_exists('mysubs');
+	}
+	
+	function mysubs_uninstall()
+	{
+		global $cache, $db;
+		
+		/* Drop the subscriptions table. */
+		if($db->table_exists('mysubs')) $db->drop_table('mysubs');
+		
+		/* Drop the IPN log table. */
+		if($db->table_exists('mysubs_notifs')) $db->drop_table('mysubs_notifs');
+		
+		/* Delete the settings. */
+		if($db->table_exists('mysubs_settings')) $db->drop_table('mysubs_settings');
+		
+	}
+	
+	function mysubs_activate()
+	{
+		global $cache, $db;
 		
 		/* Create new task to check updates to users. */
 		if(!$db->fetch_array($db->simple_select('tasks', '*', "`file`='mysubs'")))
@@ -172,16 +197,7 @@
 	function mysubs_deactivate()
 	{
 		global $cache, $db;
-		
-		/* Drop the subscriptions table. */
-		if($db->table_exists('mysubs')) $db->drop_table('mysubs');
-		
-		/* Drop the IPN log table. */
-		if($db->table_exists('mysubs_notifs')) $db->drop_table('mysubs_notifs');
-		
-		/* Delete the settings. */
-		if($db->table_exists('mysubs_settings')) $db->drop_table('mysubs_settings');
-		
+	
 		/* Remove the task. */
 		if($db->fetch_array($db->simple_select('tasks', '*', "`file` LIKE 'mysubs'"))) $db->delete_query('tasks', "`file` LIKE 'mysubs'");
 		$cache->update_tasks();

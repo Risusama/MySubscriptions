@@ -98,5 +98,7 @@
 	$l['user'] = 'User';
 	$l['view_details'] = 'View Details';
 	$l['view_subs'] = 'View Subscribers';
+	
+	$l['task_mysubs_ran'] = 'MySubscriptions ran successfully.';
 
 ?>

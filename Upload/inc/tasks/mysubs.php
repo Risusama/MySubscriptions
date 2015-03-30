@@ -15,7 +15,7 @@
 	function task_mysubs($task)
 	{
 		global $db, $lang;
-		$lang->load('mysubs');
+		$lang->load('user_mysubs');
 		
 		/**
 		 * TODO:
