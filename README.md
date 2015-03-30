@@ -1,6 +1,6 @@
-====================================
-   MySubscriptions - http://mybbplug.in/s/
-====================================
+# MySubscriptions
+
+Allows for the creation of monetary subscriptions to certain usergroups.
 
 Hello! Thank you for downloading MySubscriptions.
 
